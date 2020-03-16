@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.6.0 
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - data:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks
+      # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node 
+
+
+volumes:
+  data:
+    driver: local
